@@ -1,28 +1,24 @@
 package com.example.newsapp;
 
-import androidx.annotation.RequiresApi;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-
-import android.app.Dialog;
 import android.content.Intent;
-import android.os.Build;
+import android.net.Uri;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.squareup.picasso.Picasso;
 
 public class Detailed_Activity extends AppCompatActivity implements AppBarLayout.OnOffsetChangedListener{
@@ -66,7 +62,9 @@ public class Detailed_Activity extends AppCompatActivity implements AppBarLayout
         mTitle = intent.getStringExtra("title");
         mSource = intent.getStringExtra("source");
         mDate = intent.getStringExtra("time");
-        String desc = intent.getStringExtra("desc");
+        mAuthor = intent.getStringExtra("author");
+
+//        String desc = intent.getStringExtra("desc");
         mImg = intent.getStringExtra("imageUrl");
         mUrl = intent.getStringExtra("url");
         Picasso.get().load(mImg).into(imageView);
@@ -74,7 +72,7 @@ public class Detailed_Activity extends AppCompatActivity implements AppBarLayout
 
         appbar_title.setText(mSource);
         appbar_subtitle.setText(mUrl);
-        date.setText(mDate);
+        date.setText(DateFormat.simpleDateFormat(mDate));
         title.setText(mTitle);
 
         String author;
@@ -84,7 +82,7 @@ public class Detailed_Activity extends AppCompatActivity implements AppBarLayout
             author = "";
         }
 
-        time.setText(mSource + author + " \u2022 " + mDate);
+        time.setText(mSource + author + " \u2022 " + DateFormat.dateTime(mDate));
         initWebView(mUrl);
     }
 
@@ -130,7 +128,42 @@ public class Detailed_Activity extends AppCompatActivity implements AppBarLayout
             titleAppbar.setVisibility(View.GONE);
             isHideToolbarView = !isHideToolbarView;
         }
+    }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_newsdetail, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        int id = item.getItemId();
+
+        if (id == R.id.view_web){
+            Intent i = new Intent(Intent.ACTION_VIEW);
+            i.setData(Uri.parse(mUrl));
+            startActivity(i);
+            return true;
+        }
+
+        else if (id == R.id.share){
+            try{
+
+                Intent i = new Intent(Intent.ACTION_SEND);
+                i.setType("text/plan");
+                i.putExtra(Intent.EXTRA_SUBJECT, mSource);
+                String body = mTitle + "\n" + mUrl + "\n" + "Share from the News App" + "\n";
+                i.putExtra(Intent.EXTRA_TEXT, body);
+                startActivity(Intent.createChooser(i, "Share with :"));
+
+            }catch (Exception e){
+                Toast.makeText(this, "Error!, \nCannot be share", Toast.LENGTH_SHORT).show();
+            }
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }
 

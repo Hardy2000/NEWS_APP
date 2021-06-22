@@ -2,7 +2,6 @@ package com.example.newsapp;
 
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,12 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.newsapp.ObjectModel.Articles;
 import com.squareup.picasso.Picasso;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
-import java.util.concurrent.TimeUnit;
 
 public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
 
@@ -52,7 +46,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
 
         holder.t_Title.setText(a.getTitle());
         holder.t_Source.setText(a.getSource().getName());
-        holder.t_Date.setText(dateTime(a.getPublishedAt()));
+        holder.t_Date.setText(DateFormat.dateTime(a.getPublishedAt()));
 
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,8 +54,8 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
                 Intent intent = new Intent(context, Detailed_Activity.class);
                 intent.putExtra("title", a.getTitle());
                 intent.putExtra("source", a.getSource().getName());
-                intent.putExtra("time", dateTime(a.getPublishedAt()));
-                intent.putExtra("desc", a.getDescription());
+                intent.putExtra("time", a.getPublishedAt());
+                intent.putExtra("author",a.getAuthor());
                 intent.putExtra("imageUrl", a.getUrlToImage());
                 intent.putExtra("url", a.getUrl());
                 context.startActivity(intent);
@@ -95,60 +89,6 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
     }
 
 
-    public String dateTime(String dataDate) {
-        String convTime = null;
 
-        String prefix = "";
-        String suffix = "Ago";
 
-        try {
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
-            Date pasTime = dateFormat.parse(dataDate);
-
-            Date nowTime = new Date();
-
-            long dateDiff = nowTime.getTime() - pasTime.getTime();
-
-            long second = TimeUnit.MILLISECONDS.toSeconds(dateDiff);
-            long minute = TimeUnit.MILLISECONDS.toMinutes(dateDiff);
-            long hour = TimeUnit.MILLISECONDS.toHours(dateDiff);
-            long day = TimeUnit.MILLISECONDS.toDays(dateDiff);
-
-            if (second < 60) {
-                convTime = second + " Seconds " + suffix;
-            } else if (minute < 60) {
-                convTime = minute + " Minutes " + suffix;
-            } else if (hour < 24) {
-                convTime = hour + " Hours " + suffix;
-            } else if (day >= 7) {
-                if (day > 360) {
-                    convTime = (day / 360) + " Years " + suffix;
-                } else if (day > 30) {
-                    convTime = (day / 30) + " Months " + suffix;
-                } else {
-                    convTime = (day / 7) + " Week " + suffix;
-                }
-            } else if (day < 7) {
-                convTime = day + " Days " + suffix;
-            }
-
-        } catch (ParseException e) {
-            e.printStackTrace();
-            Log.e("ConvTimeE", e.getMessage());
-        }
-
-        return convTime;
-    }
-
-//    public static String getCountry() {
-//        Locale locale = Locale.getDefault();
-//        String country = String.valueOf(locale.getCountry());
-//        return country.toLowerCase();
-//    }
-//
-//    public static String getLanguage() {
-//        Locale locale = Locale.getDefault();
-//        String country = String.valueOf(locale.getLanguage());
-//        return country.toLowerCase();
-//    }
 }
