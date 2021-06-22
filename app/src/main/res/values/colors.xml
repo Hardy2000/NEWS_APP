@@ -1,11 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-<!--    <color name="colorPrimary">#4CAF50</color>-->
-<!--    <color name="colorPrimaryDark">#009688</color>-->
-<!--    <color name="colorAccent">#E91E63</color>-->
-
-    <color name="colorPrimary">#201F22</color>   <!--This color is changed to black to change action bar in activity_detail   -->
+    <color name="colorPrimary">#201F22
+    </color>   <!--This color is changed to black to change action bar in activity_detail   -->
     <color name="colorPrimaryDark">#191819</color>
     <color name="colorAccent">#191819</color>
 
@@ -13,7 +10,7 @@
     <color name="colorTextSubtitle">#4e4e4e</color>
     <color name="colorTextTitle">#262626</color>
 
-<!--    custom colors-->
+    <!--    custom colors-->
     <color name="grey">#eeefee</color>
     <color name="red">#CE0700</color>
     <color name="black">#191819</color>

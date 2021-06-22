@@ -3,6 +3,7 @@ package com.example.newsapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -21,7 +22,7 @@ import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.squareup.picasso.Picasso;
 
-public class Detailed_Activity extends AppCompatActivity implements AppBarLayout.OnOffsetChangedListener{
+public class Detailed_Activity extends AppCompatActivity implements AppBarLayout.OnOffsetChangedListener {
 
     private ImageView imageView;
     private TextView appbar_title, appbar_subtitle, date, time, title;
@@ -76,7 +77,7 @@ public class Detailed_Activity extends AppCompatActivity implements AppBarLayout
         title.setText(mTitle);
 
         String author;
-        if (mAuthor != null){
+        if (mAuthor != null) {
             author = " \u2022 " + mAuthor;
         } else {
             author = "";
@@ -86,7 +87,7 @@ public class Detailed_Activity extends AppCompatActivity implements AppBarLayout
         initWebView(mUrl);
     }
 
-    private void initWebView(String url){
+    private void initWebView(String url) {
         WebView webView = findViewById(R.id.webView);
         webView.getSettings().setLoadsImagesAutomatically(true);
         webView.getSettings().setJavaScriptEnabled(true);
@@ -141,15 +142,13 @@ public class Detailed_Activity extends AppCompatActivity implements AppBarLayout
 
         int id = item.getItemId();
 
-        if (id == R.id.view_web){
+        if (id == R.id.view_web) {
             Intent i = new Intent(Intent.ACTION_VIEW);
             i.setData(Uri.parse(mUrl));
             startActivity(i);
             return true;
-        }
-
-        else if (id == R.id.share){
-            try{
+        } else if (id == R.id.share) {
+            try {
 
                 Intent i = new Intent(Intent.ACTION_SEND);
                 i.setType("text/plan");
@@ -158,7 +157,7 @@ public class Detailed_Activity extends AppCompatActivity implements AppBarLayout
                 i.putExtra(Intent.EXTRA_TEXT, body);
                 startActivity(Intent.createChooser(i, "Share with :"));
 
-            }catch (Exception e){
+            } catch (Exception e) {
                 Toast.makeText(this, "Error!, \nCannot be share", Toast.LENGTH_SHORT).show();
             }
         }
@@ -166,16 +165,6 @@ public class Detailed_Activity extends AppCompatActivity implements AppBarLayout
         return super.onOptionsItemSelected(item);
     }
 }
-
-
-
-
-
-
-
-
-
-
 
 
 //    TextView tvTitle, tvSource, tvTime;

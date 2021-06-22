@@ -17,7 +17,7 @@ public class Headlines {
 
     @SerializedName("articles")
     @Expose
-    private List<Articles>articles;
+    private List<Articles> articles;
 
     public String getStatus() {
         return status;

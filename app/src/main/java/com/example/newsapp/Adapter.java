@@ -55,7 +55,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
                 intent.putExtra("title", a.getTitle());
                 intent.putExtra("source", a.getSource().getName());
                 intent.putExtra("time", a.getPublishedAt());
-                intent.putExtra("author",a.getAuthor());
+                intent.putExtra("author", a.getAuthor());
                 intent.putExtra("imageUrl", a.getUrlToImage());
                 intent.putExtra("url", a.getUrl());
                 context.startActivity(intent);
@@ -87,8 +87,6 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
             cardView = itemView.findViewById(R.id.cardView);
         }
     }
-
-
 
 
 }

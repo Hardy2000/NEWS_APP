@@ -55,8 +55,7 @@ public class DateFormat {
     }
 
 
-
-    public static String simpleDateFormat(String oldstringDate){
+    public static String simpleDateFormat(String oldstringDate) {
         String newDate;
         SimpleDateFormat dateFormat = new SimpleDateFormat("EEE, d MMM yyyy");
         try {
@@ -69,8 +68,6 @@ public class DateFormat {
 
         return newDate;
     }
-
-
 
 
 }

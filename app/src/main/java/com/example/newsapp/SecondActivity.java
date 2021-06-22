@@ -54,33 +54,33 @@ public class SecondActivity extends AppCompatActivity {
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                retriveJson("",country, API_KEY);
+                retriveJson("", country, API_KEY);
             }
         });
 
 
-        retriveJson("",country, API_KEY);
+        retriveJson("", country, API_KEY);
         //       retriveJson(country,"abcd");
 
         s_Search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!s_Query.getText().toString().trim().equals("")){
+                if (!s_Query.getText().toString().trim().equals("")) {
                     swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
                         @Override
                         public void onRefresh() {
-                            retriveJson(s_Query.getText().toString().trim(),country,API_KEY);
+                            retriveJson(s_Query.getText().toString().trim(), country, API_KEY);
                         }
                     });
-                    retriveJson(s_Query.getText().toString().trim(),country,API_KEY);
-                }else{
+                    retriveJson(s_Query.getText().toString().trim(), country, API_KEY);
+                } else {
                     swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
                         @Override
                         public void onRefresh() {
-                            retriveJson("",country,API_KEY);
+                            retriveJson("", country, API_KEY);
                         }
                     });
-                    retriveJson("",country,API_KEY);
+                    retriveJson("", country, API_KEY);
                 }
             }
         });
@@ -88,13 +88,13 @@ public class SecondActivity extends AppCompatActivity {
 
     }
 
-    public void retriveJson(String query,String country, String apikey) {
+    public void retriveJson(String query, String country, String apikey) {
 
         swipeRefreshLayout.setRefreshing(true);
         Call<Headlines> call;
         if (!s_Query.getText().toString().trim().equals("")) {
             call = ApiClient.getInstance().getApi().getSpecificData(query, apikey);
-        }else {
+        } else {
             call = ApiClient.getInstance().getApi().getHeadlines(country, apikey);
         }
         call.enqueue(new Callback<Headlines>() {
