@@ -73,7 +73,6 @@ public class SecondActivity extends AppCompatActivity {
 
 
         retriveJson("", country, API_KEY);
-        //       retriveJson(country,"abcd");
 
         s_Search.setOnClickListener(new View.OnClickListener() {
             @Override
