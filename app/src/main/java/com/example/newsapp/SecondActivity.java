@@ -5,11 +5,15 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import android.media.Image;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.newsapp.ObjectModel.Articles;
@@ -27,11 +31,15 @@ public class SecondActivity extends AppCompatActivity {
 
     RecyclerView recyclerView;
     SwipeRefreshLayout swipeRefreshLayout;
-    final String API_KEY = "b24e60e9752d4dcdbfe4c7a72a0d35e0";
+    final String API_KEY = BuildConfig.Api_Key;  // Enter your api Eg. API_KEY="1253CEhja"
     Adapter adapter;
     EditText s_Query;
     Button s_Search;
     List<Articles> articles = new ArrayList<>();
+    private RelativeLayout crashlayout;
+    ImageView crashImage;
+    TextView crashHeader, crashMessage;
+    Button crashRetry_Btn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +55,11 @@ public class SecondActivity extends AppCompatActivity {
         s_Query = findViewById(R.id.search_txt);
         s_Search = findViewById(R.id.btnSearch);
 
+        crashlayout = findViewById(R.id.crashLayout);
+        crashImage = findViewById(R.id.crashImage);
+        crashHeader = findViewById(R.id.crashHeader);
+        crashMessage = findViewById(R.id.crashMessage);
+        crashRetry_Btn = findViewById(R.id.crash_retry_btn);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         String country = getCountry();
@@ -89,7 +102,7 @@ public class SecondActivity extends AppCompatActivity {
     }
 
     public void retriveJson(String query, String country, String apikey) {
-
+        crashlayout.setVisibility(View.GONE);
         swipeRefreshLayout.setRefreshing(true);
         Call<Headlines> call;
         if (!s_Query.getText().toString().trim().equals("")) {
@@ -107,6 +120,23 @@ public class SecondActivity extends AppCompatActivity {
                     adapter = new Adapter(SecondActivity.this, articles);
                     recyclerView.setAdapter(adapter);
 
+                } else {
+                    swipeRefreshLayout.setRefreshing(false);
+                    String errorcode;
+                    switch (response.code()) {
+                        case 404:
+                            errorcode = "404 not found";
+                            break;
+                        case 500:
+                            errorcode = "500 server broken";
+                            break;
+                        default:
+                            errorcode = "unknown error";
+                            break;
+                    }
+                    showErrorMessage(R.drawable.crashlytics_512, country,
+                            "No Result",
+                            "Please try Again\n" + errorcode);
                 }
             }
 
@@ -114,7 +144,10 @@ public class SecondActivity extends AppCompatActivity {
             public void onFailure(Call<Headlines> call, Throwable t) {
                 swipeRefreshLayout.setRefreshing(false);
 
-                Toast.makeText(SecondActivity.this, t.getLocalizedMessage(), Toast.LENGTH_LONG).show();
+                showErrorMessage(R.drawable.crashlytics_512, country,
+                        "Opps..!",
+                        "Network failure, Please try Again\n" + t.toString());
+                //  Toast.makeText(SecondActivity.this, t.getLocalizedMessage(), Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -125,4 +158,22 @@ public class SecondActivity extends AppCompatActivity {
         String country = locale.getCountry();
         return country.toLowerCase();
     }
+
+    private void showErrorMessage(int imageView, String country, String header, String message) {
+        if (crashlayout.getVisibility() == View.GONE) {
+            crashlayout.setVisibility(View.VISIBLE);
+        }
+        crashImage.setImageResource(imageView);
+        crashHeader.setText(header);
+        crashMessage.setText(message);
+        crashRetry_Btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                retriveJson("", country, API_KEY);
+            }
+        });
+
+    }
+
+
 }

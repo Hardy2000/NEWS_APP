@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/crashLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBackground"
+    android:visibility="gone">
+
+    <ImageView
+        android:id="@+id/crashImage"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="80dp"
+        android:src="@drawable/crashlytics_512" />
+
+    <TextView
+        android:id="@+id/crashHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/crashImage"
+        android:fontFamily="@font/g_bold"
+        android:layout_marginTop="10dp"
+        android:layout_centerHorizontal="true"
+        android:text="Crash Message"
+        android:textSize="23sp"
+        android:textStyle="bold" />
+    <TextView
+        android:id="@+id/crashMessage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/crashHeader"
+        android:fontFamily="@font/g_light"
+        android:textAlignment="center"
+        android:gravity="center_horizontal"
+        android:layout_centerHorizontal="true"
+        android:text="Crash Message"
+        android:textSize="20sp"
+        />
+    <Button
+        android:id="@+id/crash_retry_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Retry"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/crashMessage"
+        android:textColor="@color/white"
+        android:backgroundTint="@color/black"
+        android:elevation="4dp"
+        android:layout_centerHorizontal="true"
+        />
+
+</RelativeLayout>
