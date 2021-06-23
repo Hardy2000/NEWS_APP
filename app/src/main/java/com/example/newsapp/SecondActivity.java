@@ -4,8 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-
-import android.media.Image;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
@@ -14,8 +12,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import com.example.newsapp.ObjectModel.Articles;
 import com.example.newsapp.ObjectModel.Headlines;
 
